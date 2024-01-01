@@ -1,0 +1,20 @@
+body {
+  background-color: black;
+  text-align: center;
+  color: lightgray;
+}
+
+.hide {
+  display: none;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+  display: inline-block;
+  background-color: rgb(30, 30, 30); /*Remove when game is finished*/
+  margin-right: -1px;
+  margin-bottom: -4px;
+  font-size: 1.5em;
+}
