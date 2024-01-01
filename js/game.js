@@ -10,7 +10,7 @@ const LASER = "⤊";
 
 var gBoard;
 var gGame = {
-  isOn: false,
+  isOn: true,
   alienCount: 0,
 };
 
@@ -18,6 +18,7 @@ function init() {
   gBoard = createBoard();
   createHero(gBoard)
   renderBoard(gBoard);
+  document.addEventListener('keydown', onKeyDown);
 }
 
 function createBoard() {
@@ -41,13 +42,14 @@ function renderBoard(board) {
     for (var j = 0; j < board[i].length; j++) {
       var cellElement = document.createElement("div");
       cellElement.classList.add("cell");
+      cellElement.dataset.i = i;
+      cellElement.dataset.j = j;
       if (board[i][j].gameObject === ALIEN) {
         cellElement.innerHTML = ALIEN;
       }
       if (board[i][j].gameObject === HERO) {
         cellElement.innerHTML = HERO;
       }
-      // cellElement.innerHTML = ''     //Check if necessary 
       rowElement.appendChild(cellElement);
     }
     boardElement.appendChild(rowElement);
