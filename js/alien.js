@@ -14,7 +14,20 @@ function createAliens(board) {
   }
 }
 
-function handleAlienHit(pos) {}
+function handleAlienHit(pos) {
+  // מוריד חייזר מהלוח
+  gBoard[pos.i][pos.j].gameObject = null;
+  updateCell(pos, null); // מחליף חייזר בתא ריק
+  score += 10;
+  ALIENS_ON_BOARD--
+  updateScoreDisplay();
+  if (ALIENS_ON_BOARD === 0) {
+    alert('victory')
+    gGame.victory = true
+    gameOver(true)
+}
+}
+
 
 function shiftBoardRight(board, fromI, toI) {}
 

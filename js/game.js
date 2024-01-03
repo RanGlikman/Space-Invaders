@@ -2,11 +2,13 @@
 
 const SKY = "Sky";
 const BOARD_SIZE = 14;
-const ALIEN_ROW_LENGTH = 8;
-const ALIEN_ROW_COUNT = 3;
-const HERO = "♆";
+const ALIEN_ROW_LENGTH = 2; //8
+const ALIEN_ROW_COUNT = 1; //3
+var ALIENS_ON_BOARD = ALIEN_ROW_LENGTH * ALIEN_ROW_COUNT
+const HERO = "🔱";
 const ALIEN = "👽";
-const LASER = "⤊";
+const LASER = "⚜️";
+let score = 0;
 
 var gBoard;
 var gGame = {
@@ -16,9 +18,9 @@ var gGame = {
 
 function init() {
   gBoard = createBoard();
-  createHero(gBoard)
+  createHero(gBoard);
   renderBoard(gBoard);
-  document.addEventListener('keydown', onKeyDown);
+  document.addEventListener("keydown", onKeyDown);
 }
 
 function createBoard() {
@@ -50,6 +52,10 @@ function renderBoard(board) {
       if (board[i][j].gameObject === HERO) {
         cellElement.innerHTML = HERO;
       }
+      if (board[i][j].gameObject === LASER) {
+        // cellElement.classList.add("laser-cell");
+        cellElement.innerHTML = LASER;
+      }
       rowElement.appendChild(cellElement);
     }
     boardElement.appendChild(rowElement);
@@ -60,8 +66,38 @@ function createCell(gameObject = null) {
   return { type: SKY, gameObject: gameObject };
 }
 
-function updateCell(pos, gameObject = null) {
-  gBoard[pos.i][pos.j].gameObject = gameObject;
-  var elCell = getElCell(pos);
-  elCell.innerHTML = gameObject || "";
+function updateCell(pos, content) {
+  if (pos.i >= 0 && pos.i < BOARD_SIZE && pos.j >= 0 && pos.j < BOARD_SIZE) {
+    gBoard[pos.i][pos.j].gameObject = content; // Update the game board
+    renderCell(pos, content); // Update the HTML display
+  }
+}
+
+function updateScore(diff) {
+  const elScore = document.querySelector("h2 span");
+
+  if (diff === 0) {
+    gGame.score = 0;
+  }
+  // Model
+  gGame.score += diff;
+  // DOM
+  elScore.innerText = gGame.score;
+}
+
+function gameOver(isVictory) {
+  console.log('Game Over')
+
+  // clearInterval(gGhostsInterval)
+  // clearInterval(gCherryInterval)
+  showGameOver()
+  const elMsgSpan = document.querySelector('.game-over .msg')
+  elMsgSpan.innerText = isVictory ? 'VICTORY' : 'GAME OVER'
+  gGame.isOn = false
+
+}
+
+function showGameOver() {
+  hideElement('.board-container')
+  showElement('.game-over')
 }

@@ -18,3 +18,12 @@ body {
   margin-bottom: -4px;
   font-size: 1.5em;
 }
+
+.laser-cell {
+  color: red;
+  background-color: rgb(30, 186, 80);
+}
+
+.hide {
+  display: none;
+}
