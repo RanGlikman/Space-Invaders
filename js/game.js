@@ -1,27 +1,35 @@
 "use strict";
-
+/* -------------------------------------------------------------------------- */
 const SKY = "Sky";
 const BOARD_SIZE = 14;
-const ALIEN_ROW_LENGTH = 2; //8
-const ALIEN_ROW_COUNT = 1; //3
+const ALIEN_ROW_LENGTH = 8; //8
+const ALIEN_ROW_COUNT = 3; //3
 var ALIENS_ON_BOARD = ALIEN_ROW_LENGTH * ALIEN_ROW_COUNT
-const HERO = "🔱";
-const ALIEN = "👽";
-const LASER = "⚜️";
+const HERO = "👆";
+const ALIEN = "👾";
+const LASER = "🔺";
 let score = 0;
-
+// var ALIEN_SPEED = 500
 var gBoard;
 var gGame = {
   isOn: true,
-  alienCount: 0,
+  // score: 3,
 };
 
+/* -------------------------------------------------------------------------- */
+
 function init() {
+  // var board = []
+  // gGame.score = 0
   gBoard = createBoard();
   createHero(gBoard);
   renderBoard(gBoard);
   document.addEventListener("keydown", onKeyDown);
+  // score = 6
+  updateScore(0)
 }
+
+/* -------------------------------------------------------------------------- */
 
 function createBoard() {
   var board = [];
@@ -34,6 +42,8 @@ function createBoard() {
   createAliens(board);
   return board;
 }
+
+/* -------------------------------------------------------------------------- */
 
 function renderBoard(board) {
   var boardElement = document.getElementById("gameBoard");
@@ -62,9 +72,14 @@ function renderBoard(board) {
   }
 }
 
+
+/* -------------------------------------------------------------------------- */
+
 function createCell(gameObject = null) {
   return { type: SKY, gameObject: gameObject };
 }
+
+/* -------------------------------------------------------------------------- */
 
 function updateCell(pos, content) {
   if (pos.i >= 0 && pos.i < BOARD_SIZE && pos.j >= 0 && pos.j < BOARD_SIZE) {
@@ -72,6 +87,8 @@ function updateCell(pos, content) {
     renderCell(pos, content); // Update the HTML display
   }
 }
+
+/* -------------------------------------------------------------------------- */
 
 function updateScore(diff) {
   const elScore = document.querySelector("h2 span");
@@ -85,6 +102,8 @@ function updateScore(diff) {
   elScore.innerText = gGame.score;
 }
 
+/* -------------------------------------------------------------------------- */
+
 function gameOver(isVictory) {
   console.log('Game Over')
 
@@ -97,7 +116,37 @@ function gameOver(isVictory) {
 
 }
 
+/* -------------------------------------------------------------------------- */
+
 function showGameOver() {
-  hideElement('.board-container')
+  // hideElement('.board-container')
   showElement('.game-over')
+  // alert("v ")
 }
+
+/* -------------------------------------------------------------------------- */
+
+function showElement(selector) {
+  const el = document.querySelector(selector)
+  el.classList.remove('hide')
+}
+
+/* -------------------------------------------------------------------------- */
+
+function hideElement(selector) {
+  const el = document.querySelector(selector)
+  el.classList.add('hide')
+}
+
+/* -------------------------------------------------------------------------- */
+
+function gameLoop() {
+  shiftBoardRight(gBoard); // Move aliens
+  renderBoard(gBoard);     // Then render the board
+}
+
+/* -------------------------------------------------------------------------- */
+
+setInterval(gameLoop, 500);
+
+/* -------------------------------------------------------------------------- */

@@ -1,12 +1,20 @@
 "use strict";
-
-const LASER_SPEED = 80;
-const LASER_BLINK_SPEED = LASER_SPEED/2;
+/* -------------------------------------------------------------------------- */
+var LASER_SPEED = 100;
+var LASER_BLINK_SPEED = LASER_SPEED / 2;
+// const LASER_BLINK_SPEED = 50;
 var gHero = { pos: { i: 12, j: 5 }, isShoot: false };
+let isLaserVisible = true;
+
+/* -------------------------------------------------------------------------- */
+
 function createHero(board) {
+  gHero = { pos: { i: 12, j: 5 }, isShoot: false };
   board[gHero.pos.i][gHero.pos.j].gameObject = HERO;
 }
-let isLaserVisible = true;
+
+/* -------------------------------------------------------------------------- */
+
 function onKeyDown(ev) {
   const nextLocation = { i: gHero.pos.i, j: gHero.pos.j };
   // console.log("Key pressed:", ev.key, "Current location:", nextLocation); //todo remove
@@ -26,12 +34,26 @@ function onKeyDown(ev) {
       }
       break;
 
+    case "X":
+    case "x":
+      if (!gHero.isShoot) {
+        LASER_SPEED = LASER_SPEED / 2;
+        LASER_BLINK_SPEED = LASER_BLINK_SPEED / 2;
+        shoot();
+        gHero.isShoot = true;
+        LASER_SPEED = LASER_SPEED * 2;
+        LASER_BLINK_SPEED = LASER_BLINK_SPEED * 2;
+      }
+      break;
+
     default:
       return null;
   }
   // console.log("Key pressed:", ev.key, "Next location:", nextLocation); //todo remove
   moveHero(nextLocation);
 }
+
+/* -------------------------------------------------------------------------- */
 
 function moveHero(nextLocation) {
   // console.log("Moving hero to:", nextLocation); //todo remove
@@ -63,11 +85,15 @@ function moveHero(nextLocation) {
   // console.log("Hero moved to:", gHero.pos);
 }
 
+/* -------------------------------------------------------------------------- */
+
 function renderCell(position, content) {
   // Find the cell element and update its content
   const cellEl = getElCell(position);
   if (cellEl) cellEl.innerHTML = content;
 }
+
+/* -------------------------------------------------------------------------- */
 
 function shoot() {
   let laserPos = { i: gHero.pos.i - 1, j: gHero.pos.j };
@@ -79,7 +105,7 @@ function shoot() {
   let moveInterval = setInterval(() => {
     laserPos.i--; //מעלה לייזר למעלה
 
-    // Check for collision with an alien
+    // לייזר פוגע בחייזר
     if (
       gBoard[laserPos.i] &&
       gBoard[laserPos.i][laserPos.j].gameObject === ALIEN
@@ -102,18 +128,20 @@ function shoot() {
       updateCell(laserPos, null);
       return;
     }
-  
   }, LASER_SPEED);
-  
 }
+
+/* -------------------------------------------------------------------------- */
 
 function blinkLaser(laserPos, isVisible) {
   updateCell(laserPos, isVisible ? LASER : null);
 }
+
+/* -------------------------------------------------------------------------- */
 
 function updateScoreDisplay() {
   const scoreElement = document.getElementById("score");
   scoreElement.textContent = `Score: ${score}`;
 }
 
-
+/* -------------------------------------------------------------------------- */
