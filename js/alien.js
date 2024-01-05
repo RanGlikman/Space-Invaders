@@ -1,11 +1,15 @@
 "use strict";
+//TODO: When aliens hit hero, call gameOver function with !isVictory
 /* -------------------------------------------------------------------------- */
 const ALIEN_SPEED = 500;
 var gIntervalAliens;
 var gAliensTopRowIdx;
 var gAliensBottomRowIdx;
 var gIsAlienFreeze = true;
-let aliensMove = true;
+var aliensMoveRight = true;
+var aliensMoveDown = true;
+var aliensMoveLeft = true;
+var directionAfterShiftingDown = 1;
 
 /* -------------------------------------------------------------------------- */
 
@@ -31,106 +35,113 @@ function handleAlienHit(pos) {
   if (ALIENS_ON_BOARD === 0) {
     gGame.victory = true;
     gameOver(true);
-    // alert('victory')
-    // setTimeout(alert('victory'), 3000)
   }
 }
 
 /* -------------------------------------------------------------------------- */
 
-// function shiftBoardRight(board, fromI, toI) {
+// function shiftBoardRight(board, fromI, toI) { //TODO: Add fromI & toI
 function shiftBoardRight(board) {
-  // let aliensMove = true;
-  if (!aliensMove) {
+  console.log("Executing shiftBoardRight");
+  if (!aliensMoveRight) {
     return;
   }
   let reachedEnd = false;
-
   for (let i = BOARD_SIZE - 1; i >= 0; i--) {
     for (let j = BOARD_SIZE - 1; j >= 0; j--) {
-      if (board[i][j].gameObject === ALIEN && j + 1 < board[i].length) {
+      if (board[i][j].gameObject === ALIEN) {
         board[i][j].gameObject = null;
         board[i][j + 1].gameObject = ALIEN;
-        for (let i = 0; i < ALIEN_ROW_COUNT; i++)
-          if (board[i][BOARD_SIZE - 1].gameObject === ALIEN) {
-            reachedEnd = true;
-            // break;
-          }
+        for (let i = 0; i < ALIEN_ROW_COUNT; i++) renderBoard(board);
+        if (board[i][BOARD_SIZE - 1].gameObject === ALIEN) {
+          reachedEnd = true;
+        }
       }
     }
   }
   renderBoard(board);
   if (reachedEnd) {
     console.log("An alien has reached the right border. Start going down...");
-    aliensMove = false;
-    setTimeout(() => shiftBoardDown(board), ALIEN_SPEED)
+    aliensMoveRight = false;
+    aliensMoveLeft = false;
+    aliensMoveDown = true;
   }
 }
 
 /* -------------------------------------------------------------------------- */
 
-// function shiftBoardLeft(board, fromI, toI) {}
+// function shiftBoardLeft(board, fromI, toI) { //TODO: Add fromI & toI
 function shiftBoardLeft(board) {
-  console.log("Start moving left")
-  let aliensMove = true;
-  if (!aliensMove) {
+  console.log("Executing shiftBoardLeft");
+  if (!aliensMoveLeft) {
     return;
   }
   let reachedEnd = false;
-  // for (let i = BOARD_SIZE - 1; i >= 0; i--) {
-    // for (let j = BOARD_SIZE - 1; j >= 0; j--) {
   for (let i = 0; i <= BOARD_SIZE - 1; i++) {
     for (let j = 0; j <= BOARD_SIZE - 1; j++) {
-      // if (board[i][j].gameObject === ALIEN && j + 1 < board[i].length) {
-      // if (board[i][j].gameObject === ALIEN && j -1 < board[i].length) {
       if (board[i][j].gameObject === ALIEN) {
         board[i][j - 1].gameObject = ALIEN;
         board[i][j].gameObject = null;
-        
-        // for (let i = 0; i < ALIEN_ROW_COUNT; i++)
-          if (board[i][0].gameObject === ALIEN) {
-            reachedEnd = true;
-            break;
-          }
+        console.log("moved left");
+        renderBoard(board);
+        for (let i = 0; i < ALIEN_ROW_COUNT; i++) renderBoard(board);
+        if (board[i][0].gameObject === ALIEN) {
+          console.log("Reached left end?");
+          reachedEnd = true;
+        }
       }
     }
   }
   renderBoard(board);
   if (reachedEnd) {
-    console.log("An alien has reached the right border. Start going down...")
-    aliensMove = false;
-    shiftBoardDown(board);
+    console.log("An alien has reached the right border. Start going down...");
+    aliensMoveLeft = false;
+    aliensMoveDown = false;
+    aliensMoveDown = true;
   }
 }
 
 /* -------------------------------------------------------------------------- */
 
-// function shiftBoardDown(board, fromI, toI) {
+// function shiftBoardDown(board, fromI, toI) { //TODO: Add fromI & toI
 function shiftBoardDown(board) {
-  aliensMove = true;
-  if (!aliensMove) {
+  console.log("Executing shiftBoardDown");
+  if (!aliensMoveDown) {
     return;
   }
   let reachedEnd = false;
-
   for (let i = BOARD_SIZE - 1; i >= 0; i--) {
-    for (let j = BOARD_SIZE - 1; j >= 0; j--) {
+    for (let j = 0; j <= BOARD_SIZE - 1; j++) {
       if (board[i][j].gameObject === ALIEN) {
         board[i][j].gameObject = null;
         board[i + 1][j].gameObject = ALIEN;
         reachedEnd = true;
+        console.log("Aliens went down 1 ");
+        renderBoard(board);
       }
     }
   }
-  renderBoard(board);
   if (reachedEnd) {
-    console.log("Aliens went down 1 ");
-    aliensMove = false;
-    // shiftBoardLeft(board);
-    setTimeout(() => shiftBoardLeft(board), ALIEN_SPEED)
+    aliensMoveDown = false;
+    directionAfterShiftingDown *= -1;
+    if (directionAfterShiftingDown === -1) {
+      aliensMoveLeft = true;
+    } else {
+      aliensMoveRight = true;
+    }
   }
 }
 
 /* -------------------------------------------------------------------------- */
 
-function moveAliens() {}
+function moveAliens() {
+  if (aliensMoveRight) {
+    shiftBoardRight(gBoard);
+  } else if (aliensMoveLeft) {
+    shiftBoardLeft(gBoard);
+  } else if (aliensMoveDown) {
+    shiftBoardDown(gBoard);
+  }
+}
+
+gIntervalAliens = setInterval(moveAliens, ALIEN_SPEED);

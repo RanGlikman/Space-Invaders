@@ -4,29 +4,27 @@ const SKY = "Sky";
 const BOARD_SIZE = 14;
 const ALIEN_ROW_LENGTH = 8; //8
 const ALIEN_ROW_COUNT = 3; //3
-var ALIENS_ON_BOARD = ALIEN_ROW_LENGTH * ALIEN_ROW_COUNT
+var ALIENS_ON_BOARD = ALIEN_ROW_LENGTH * ALIEN_ROW_COUNT;
 const HERO = "👆";
 const ALIEN = "👾";
 const LASER = "🔺";
 let score = 0;
-// var ALIEN_SPEED = 500
 var gBoard;
 var gGame = {
   isOn: true,
-  // score: 3,
 };
 
 /* -------------------------------------------------------------------------- */
 
 function init() {
-  // var board = []
-  // gGame.score = 0
+  // var board = [] //TODO: Check where to implement board resetting
+  // gGame.score = 0 //TODO: Check where to implement score resetting
   gBoard = createBoard();
   createHero(gBoard);
   renderBoard(gBoard);
   document.addEventListener("keydown", onKeyDown);
-  // score = 6
-  updateScore(0)
+  // score = 0 //TODO: Check where to implement score resetting
+  updateScore(0);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -63,7 +61,7 @@ function renderBoard(board) {
         cellElement.innerHTML = HERO;
       }
       if (board[i][j].gameObject === LASER) {
-        // cellElement.classList.add("laser-cell");
+        // cellElement.classList.add("laser-cell"); //TODO: Check if this line is necessary
         cellElement.innerHTML = LASER;
       }
       rowElement.appendChild(cellElement);
@@ -71,7 +69,6 @@ function renderBoard(board) {
     boardElement.appendChild(rowElement);
   }
 }
-
 
 /* -------------------------------------------------------------------------- */
 
@@ -105,48 +102,65 @@ function updateScore(diff) {
 /* -------------------------------------------------------------------------- */
 
 function gameOver(isVictory) {
-  console.log('Game Over')
-
-  // clearInterval(gGhostsInterval)
-  // clearInterval(gCherryInterval)
-  showGameOver()
-  const elMsgSpan = document.querySelector('.game-over .msg')
-  elMsgSpan.innerText = isVictory ? 'VICTORY' : 'GAME OVER'
-  gGame.isOn = false
-
+  console.log("Game Over");
+  showGameOver();
+  const elMsgSpan = document.querySelector(".game-over .msg");
+  elMsgSpan.innerText = isVictory ? "VICTORY" : "GAME OVER";
+  gGame.isOn = false;
 }
 
 /* -------------------------------------------------------------------------- */
 
 function showGameOver() {
-  // hideElement('.board-container')
-  showElement('.game-over')
-  // alert("v ")
+  showElement(".game-over");
 }
 
 /* -------------------------------------------------------------------------- */
 
 function showElement(selector) {
-  const el = document.querySelector(selector)
-  el.classList.remove('hide')
+  const el = document.querySelector(selector);
+  el.classList.remove("hide");
 }
 
 /* -------------------------------------------------------------------------- */
 
 function hideElement(selector) {
-  const el = document.querySelector(selector)
-  el.classList.add('hide')
+  const el = document.querySelector(selector);
+  el.classList.add("hide");
 }
 
 /* -------------------------------------------------------------------------- */
-
-function gameLoop() {
-  shiftBoardRight(gBoard); // Move aliens
-  renderBoard(gBoard);     // Then render the board
-}
-
+/* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 
-setInterval(gameLoop, 500);
+//! OLD LOOP AND INTERVAL FUNCTIONS, CAN DELETE
 
-/* -------------------------------------------------------------------------- */
+// function gameLoop() {
+//   shiftBoardRight(gBoard); // Move aliens
+//   // renderBoard(gBoard);     // Then render the board
+// }
+
+// function shiftingRight() {
+//   shiftBoardRight(gBoard); // Move aliens
+//   // renderBoard(gBoard);     // Then render the board
+// }
+// function shiftingDown() {
+//   shiftBoardDown(gBoard); // Move aliens
+//   // renderBoard(gBoard);     // Then render the board
+// }
+// function shiftingLeft() {
+//   shiftBoardLeft(gBoard); // Move aliens
+//   // renderBoard(gBoard);     // Then render the board
+// }
+
+// setInterval(gameLoop, 100);
+// setInterval(shiftingRight, 100); //! Original first shifting function
+// setInterval(shiftingDown, 100);
+// setInterval(shiftingLeft, 100);
+
+// switch (movingDirection){
+// case "left":
+
+// }
+// shiftingRight()
+// shiftBoardRight(gBoard)

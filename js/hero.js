@@ -2,7 +2,7 @@
 /* -------------------------------------------------------------------------- */
 var LASER_SPEED = 100;
 var LASER_BLINK_SPEED = LASER_SPEED / 2;
-// const LASER_BLINK_SPEED = 50;
+// const LASER_BLINK_SPEED = 50; //TODO: Check optimal blinking laser speed
 var gHero = { pos: { i: 12, j: 5 }, isShoot: false };
 let isLaserVisible = true;
 
@@ -17,7 +17,7 @@ function createHero(board) {
 
 function onKeyDown(ev) {
   const nextLocation = { i: gHero.pos.i, j: gHero.pos.j };
-  // console.log("Key pressed:", ev.key, "Current location:", nextLocation); //todo remove
+  // console.log("Key pressed:", ev.key, "Current location:", nextLocation); //TODO: Remove or check if necessary
   switch (ev.key) {
     case "ArrowLeft":
       if (nextLocation.j > 0) nextLocation.j--;
@@ -37,26 +37,26 @@ function onKeyDown(ev) {
     case "X":
     case "x":
       if (!gHero.isShoot) {
-        LASER_SPEED = LASER_SPEED / 2;
-        LASER_BLINK_SPEED = LASER_BLINK_SPEED / 2;
+        LASER_SPEED /= 2;
+        LASER_BLINK_SPEED /= 2;
         shoot();
         gHero.isShoot = true;
-        LASER_SPEED = LASER_SPEED * 2;
-        LASER_BLINK_SPEED = LASER_BLINK_SPEED * 2;
+        LASER_SPEED *= 2;
+        LASER_BLINK_SPEED *= 2;
       }
       break;
 
     default:
       return null;
   }
-  // console.log("Key pressed:", ev.key, "Next location:", nextLocation); //todo remove
+  // console.log("Key pressed:", ev.key, "Next location:", nextLocation); //TODO: Remove or check if necessary
   moveHero(nextLocation);
 }
 
 /* -------------------------------------------------------------------------- */
 
 function moveHero(nextLocation) {
-  // console.log("Moving hero to:", nextLocation); //todo remove
+  // console.log("Moving hero to:", nextLocation); //TODO: Remove or check if necessary
   if (!gGame.isOn) return;
 
   if (
@@ -82,7 +82,7 @@ function moveHero(nextLocation) {
     renderCell(gHero.pos, HERO);
   }
 
-  // console.log("Hero moved to:", gHero.pos);
+  // console.log("Hero moved to:", gHero.pos); //TODO: Remove or check if necessary
 }
 
 /* -------------------------------------------------------------------------- */
