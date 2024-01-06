@@ -108,13 +108,14 @@ function shoot() {
     // לייזר פוגע בחייזר
     if (
       gBoard[laserPos.i] &&
-      gBoard[laserPos.i][laserPos.j].gameObject === ALIEN
+      (gBoard[laserPos.i][laserPos.j].gameObject === ALIEN ||
+        ALIEN === gBoard[laserPos.i][laserPos.j].gameObject)
     ) {
       handleAlienHit(laserPos);
+      updateCell(laserPos, null); // מוריד לייזר (מחליף אותו בתא ריק)
       clearInterval(blinkInterval);
       clearInterval(moveInterval);
       gHero.isShoot = false;
-      updateCell(laserPos, null); // מוריד לייזר (מחליף אותו בתא ריק)
 
       return;
     }
@@ -141,7 +142,7 @@ function blinkLaser(laserPos, isVisible) {
 
 function updateScoreDisplay() {
   const scoreElement = document.getElementById("score");
-  scoreElement.textContent = `Score: ${score}`;
+  scoreElement.textContent = `Score: ${gGame.score}`;
 }
 
 /* -------------------------------------------------------------------------- */

@@ -4,26 +4,35 @@ const SKY = "Sky";
 const BOARD_SIZE = 14;
 const ALIEN_ROW_LENGTH = 8; //8
 const ALIEN_ROW_COUNT = 3; //3
-var ALIENS_ON_BOARD = ALIEN_ROW_LENGTH * ALIEN_ROW_COUNT;
-const HERO = "👆";
-const ALIEN = "👾";
+const STARTING_ALIENS = ALIEN_ROW_LENGTH * ALIEN_ROW_COUNT;
+var ALIENS_ON_BOARD = STARTING_ALIENS;
+var HERO = "👆";
+var ALIEN = "👾";
 const LASER = "🔺";
-let score = 0;
 var gBoard;
 var gGame = {
   isOn: true,
+  // score: 0,
+  alienCount: 0,
 };
 
 /* -------------------------------------------------------------------------- */
 
 function init() {
   // var board = [] //TODO: Check where to implement board resetting
-  // gGame.score = 0 //TODO: Check where to implement score resetting
+  hideGameOver();
+  aliensMoveRight = true;
+  gGame.isOn = true;
+  gGame.alienCount = 0;
+  directionAfterShiftingDown = 1;
   gBoard = createBoard();
+  ALIENS_ON_BOARD = STARTING_ALIENS;
   createHero(gBoard);
   renderBoard(gBoard);
   document.addEventListener("keydown", onKeyDown);
-  // score = 0 //TODO: Check where to implement score resetting
+  clearInterval(gIntervalAliens);
+  gIntervalAliens = setInterval(moveAliens, ALIEN_SPEED);
+  gGame.score = 0; //TODO: Check where to implement score resetting
   updateScore(0);
 }
 
@@ -103,6 +112,9 @@ function updateScore(diff) {
 
 function gameOver(isVictory) {
   console.log("Game Over");
+  console.log("Aliens killed: " + gGame.alienCount);
+  gHero.isShoot = true;
+  clearInterval(gIntervalAliens);
   showGameOver();
   const elMsgSpan = document.querySelector(".game-over .msg");
   elMsgSpan.innerText = isVictory ? "VICTORY" : "GAME OVER";
@@ -113,6 +125,10 @@ function gameOver(isVictory) {
 
 function showGameOver() {
   showElement(".game-over");
+}
+
+function hideGameOver() {
+  hideElement(".game-over");
 }
 
 /* -------------------------------------------------------------------------- */
@@ -130,37 +146,3 @@ function hideElement(selector) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-
-//! OLD LOOP AND INTERVAL FUNCTIONS, CAN DELETE
-
-// function gameLoop() {
-//   shiftBoardRight(gBoard); // Move aliens
-//   // renderBoard(gBoard);     // Then render the board
-// }
-
-// function shiftingRight() {
-//   shiftBoardRight(gBoard); // Move aliens
-//   // renderBoard(gBoard);     // Then render the board
-// }
-// function shiftingDown() {
-//   shiftBoardDown(gBoard); // Move aliens
-//   // renderBoard(gBoard);     // Then render the board
-// }
-// function shiftingLeft() {
-//   shiftBoardLeft(gBoard); // Move aliens
-//   // renderBoard(gBoard);     // Then render the board
-// }
-
-// setInterval(gameLoop, 100);
-// setInterval(shiftingRight, 100); //! Original first shifting function
-// setInterval(shiftingDown, 100);
-// setInterval(shiftingLeft, 100);
-
-// switch (movingDirection){
-// case "left":
-
-// }
-// shiftingRight()
-// shiftBoardRight(gBoard)
