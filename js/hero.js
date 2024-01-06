@@ -17,7 +17,7 @@ function createHero(board) {
 
 function onKeyDown(ev) {
   const nextLocation = { i: gHero.pos.i, j: gHero.pos.j };
-  // console.log("Key pressed:", ev.key, "Current location:", nextLocation); //TODO: Remove or check if necessary
+  // console.log("Key pressed:", ev.key, "Current location:", nextLocation); //TODO: Check if necessary
   switch (ev.key) {
     case "ArrowLeft":
       if (nextLocation.j > 0) nextLocation.j--;
@@ -48,18 +48,25 @@ function onKeyDown(ev) {
         LASER_BLINK_SPEED *= 2;
       }
       break;
+    case "N":
+    case "n":
+      if (gHero.isShoot) {
+        // alert("N")
+        blowUpNeighbors(gBoard, laserPos.i, laserPos.j);
+      }
+      break;
 
     default:
       return null;
   }
-  // console.log("Key pressed:", ev.key, "Next location:", nextLocation); //TODO: Remove or check if necessary
+  // console.log("Key pressed:", ev.key, "Next location:", nextLocation); //TODO: Check if necessary
   moveHero(nextLocation);
 }
 
 /* -------------------------------------------------------------------------- */
 
 function moveHero(nextLocation) {
-  // console.log("Moving hero to:", nextLocation); //TODO: Remove or check if necessary
+  // console.log("Moving hero to:", nextLocation); //TODO: Check if necessary
   if (!gGame.isOn) return;
 
   if (
@@ -85,7 +92,7 @@ function moveHero(nextLocation) {
     renderCell(gHero.pos, HERO);
   }
 
-  // console.log("Hero moved to:", gHero.pos); //TODO: Remove or check if necessary
+  // console.log("Hero moved to:", gHero.pos); //TODO: Check if necessary
 }
 
 /* -------------------------------------------------------------------------- */

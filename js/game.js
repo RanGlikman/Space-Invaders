@@ -10,6 +10,7 @@ var HERO = "👆";
 var ALIEN = "👾";
 const LASER = "🔺";
 var superModeleft = 3;
+var laserPos = { i: -1, j: -1 };
 var gBoard;
 var gGame = {
   isOn: true,
@@ -20,7 +21,6 @@ var gGame = {
 /* -------------------------------------------------------------------------- */
 
 function init() {
-  // var board = [] //TODO: Check where to implement board resetting
   hideGameOver();
   aliensMoveRight = true;
   gGame.isOn = true;
@@ -31,11 +31,12 @@ function init() {
   ALIENS_ON_BOARD = STARTING_ALIENS;
   createHero(gBoard);
   renderBoard(gBoard);
-  document.addEventListener("keydown", onKeyDown);
-  clearInterval(gIntervalAliens);
+  // clearInterval(gIntervalAliens);
   gIntervalAliens = setInterval(moveAliens, ALIEN_SPEED);
   gGame.score = 0; //TODO: Check where to implement score resetting
   updateScore(0);
+  updateScoreDisplay();
+  document.addEventListener("keydown", onKeyDown);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -72,7 +73,7 @@ function renderBoard(board) {
         cellElement.innerHTML = HERO;
       }
       if (board[i][j].gameObject === LASER) {
-        // cellElement.classList.add("laser-cell"); //TODO: Check if this line is necessary
+        // cellElement.classList.add("laser-cell"); //TODO: Check if necessary
         cellElement.innerHTML = LASER;
       }
       rowElement.appendChild(cellElement);

@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 //TODO: When aliens hit hero, call gameOver function with !isVictory
 /* -------------------------------------------------------------------------- */
 const ALIEN_SPEED = 500;
@@ -52,7 +52,7 @@ function shiftBoardRight(board) {
     for (let j = BOARD_SIZE - 1; j >= 0; j--) {
       if (board[BOARD_SIZE - 2][j].gameObject === ALIEN) {
         alienTouchingHero();
-      } //!!!!!
+      }
       if (board[i][j].gameObject === ALIEN) {
         board[i][j].gameObject = null;
         board[i][j + 1].gameObject = ALIEN;
@@ -85,7 +85,7 @@ function shiftBoardLeft(board) {
     for (let j = 0; j <= BOARD_SIZE - 1; j++) {
       if (board[BOARD_SIZE - 2][j].gameObject === ALIEN) {
         alienTouchingHero();
-      } //!!!!!
+      }
       if (board[i][j].gameObject === ALIEN) {
         board[i][j - 1].gameObject = ALIEN;
         board[i][j].gameObject = null;
@@ -121,7 +121,7 @@ function shiftBoardDown(board) {
     for (let j = 0; j <= BOARD_SIZE - 1; j++) {
       if (board[BOARD_SIZE - 2][j].gameObject === ALIEN) {
         alienTouchingHero();
-      } //!!!!!
+      }
       if (board[i][j].gameObject === ALIEN) {
         board[i][j].gameObject = null;
         board[i + 1][j].gameObject = ALIEN;
