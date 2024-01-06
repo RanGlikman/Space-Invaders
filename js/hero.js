@@ -36,11 +36,14 @@ function onKeyDown(ev) {
 
     case "X":
     case "x":
-      if (!gHero.isShoot) {
+      if (!gHero.isShoot && superModeleft > 0) {
         LASER_SPEED /= 2;
         LASER_BLINK_SPEED /= 2;
         shoot();
         gHero.isShoot = true;
+        superModeleft--;
+        updateSuperModeleft();
+        // alert("superModeleft: " + superModeleft)
         LASER_SPEED *= 2;
         LASER_BLINK_SPEED *= 2;
       }
@@ -146,3 +149,7 @@ function updateScoreDisplay() {
 }
 
 /* -------------------------------------------------------------------------- */
+function updateSuperModeleftDisplay() {
+  const superModeLeftElement = document.getElementById("superMode");
+  superModeLeftElement.textContent = `Super Mode left: ${superModeleft}`;
+}

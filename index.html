@@ -13,13 +13,14 @@
 <!-- ----------------------------------------------------------------------- -->
 
 <body onload="init()">
-    <!-- <body onload="init()" onkeyup="moveHero(event)"> -->  <!-- TODO: Check when to call moveHero(event)--> 
+    <!-- <body onload="init()" onkeyup="moveHero(event)"> --> <!-- TODO: Check when to call moveHero(event)-->
     <h1>Space Invaders</h1>
     <h2 id="score">Score: <span></span></h2>
     <div id="gameBoard"></div>
+    <h3 id="superMode">Super Mode shots left: <span>3</span></h3>
     <div class="game-over hide">
         <h3><span class="msg">VICTORY/GAME OVER message here</span></h3>
-        <button onclick="init()">Play Again</button> <!-- TODO: Add restart functionality--> 
+        <button onclick="init()">Play Again</button> <!-- TODO: Add restart functionality-->
         <script src="js/util.js"></script>
         <script src="js/game.js"></script>
         <script src="js/hero.js"></script>

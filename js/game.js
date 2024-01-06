@@ -9,6 +9,7 @@ var ALIENS_ON_BOARD = STARTING_ALIENS;
 var HERO = "👆";
 var ALIEN = "👾";
 const LASER = "🔺";
+var superModeleft = 3;
 var gBoard;
 var gGame = {
   isOn: true,
@@ -25,6 +26,7 @@ function init() {
   gGame.isOn = true;
   gGame.alienCount = 0;
   directionAfterShiftingDown = 1;
+  superModeleft = 3;
   gBoard = createBoard();
   ALIENS_ON_BOARD = STARTING_ALIENS;
   createHero(gBoard);
@@ -146,3 +148,8 @@ function hideElement(selector) {
 }
 
 /* -------------------------------------------------------------------------- */
+
+function updateSuperModeleft() {
+  const elSuperModeleft = document.querySelector("h3 span");
+  elSuperModeleft.innerText = superModeleft;
+}
