@@ -1,8 +1,7 @@
 "use strict";
 /* -------------------------------------------------------------------------- */
-var LASER_SPEED = 100;
+var LASER_SPEED = 200;
 var LASER_BLINK_SPEED = LASER_SPEED / 2;
-// const LASER_BLINK_SPEED = 50; //TODO: Check optimal blinking laser speed
 var gHero = { pos: { i: 12, j: 5 }, isShoot: false };
 let isLaserVisible = true;
 
@@ -17,7 +16,6 @@ function createHero(board) {
 
 function onKeyDown(ev) {
   const nextLocation = { i: gHero.pos.i, j: gHero.pos.j };
-  // console.log("Key pressed:", ev.key, "Current location:", nextLocation); //TODO: Check if necessary
   switch (ev.key) {
     case "ArrowLeft":
       if (nextLocation.j > 0) nextLocation.j--;
@@ -29,7 +27,7 @@ function onKeyDown(ev) {
 
     case " ":
       if (!gHero.isShoot) {
-        shoot();
+        shoot(LASER);
         gHero.isShoot = true;
       }
       break;
@@ -37,13 +35,13 @@ function onKeyDown(ev) {
     case "X":
     case "x":
       if (!gHero.isShoot && superModeleft > 0) {
+        const superLaser = "🔷";
         LASER_SPEED /= 2;
         LASER_BLINK_SPEED /= 2;
-        shoot();
+        shoot(superLaser);
         gHero.isShoot = true;
         superModeleft--;
         updateSuperModeleft();
-        // alert("superModeleft: " + superModeleft)
         LASER_SPEED *= 2;
         LASER_BLINK_SPEED *= 2;
       }
@@ -51,7 +49,6 @@ function onKeyDown(ev) {
     case "N":
     case "n":
       if (gHero.isShoot) {
-        // alert("N")
         blowUpNeighbors(gBoard, laserPos.i, laserPos.j);
       }
       break;
@@ -59,16 +56,14 @@ function onKeyDown(ev) {
     default:
       return null;
   }
-  // console.log("Key pressed:", ev.key, "Next location:", nextLocation); //TODO: Check if necessary
+
   moveHero(nextLocation);
 }
 
 /* -------------------------------------------------------------------------- */
 
 function moveHero(nextLocation) {
-  // console.log("Moving hero to:", nextLocation); //TODO: Check if necessary
   if (!gGame.isOn) return;
-
   if (
     nextLocation.i < 0 ||
     nextLocation.i >= BOARD_SIZE ||
@@ -91,10 +86,7 @@ function moveHero(nextLocation) {
     gBoard[gHero.pos.i][gHero.pos.j].gameObject = HERO;
     renderCell(gHero.pos, HERO);
   }
-
-  // console.log("Hero moved to:", gHero.pos); //TODO: Check if necessary
 }
-
 /* -------------------------------------------------------------------------- */
 
 function renderCell(position, content) {
@@ -105,10 +97,10 @@ function renderCell(position, content) {
 
 /* -------------------------------------------------------------------------- */
 
-function shoot() {
+function shoot(laserSymbol) {
   let laserPos = { i: gHero.pos.i - 1, j: gHero.pos.j };
   let blinkInterval = setInterval(() => {
-    blinkLaser(laserPos, isLaserVisible);
+    blinkLaser(laserPos, isLaserVisible, laserSymbol);
     isLaserVisible = !isLaserVisible;
   }, LASER_BLINK_SPEED);
 
@@ -144,8 +136,8 @@ function shoot() {
 
 /* -------------------------------------------------------------------------- */
 
-function blinkLaser(laserPos, isVisible) {
-  updateCell(laserPos, isVisible ? LASER : null);
+function blinkLaser(laserPos, isVisible, laserSymbol) {
+  updateCell(laserPos, isVisible ? laserSymbol : null);
 }
 
 /* -------------------------------------------------------------------------- */

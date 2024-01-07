@@ -4,12 +4,11 @@ const ALIEN_SPEED = 500;
 var gIntervalAliens;
 var gAliensTopRowIdx;
 var gAliensBottomRowIdx;
-var gIsAlienFreeze = false; // Change to true for debugging
 var aliensMoveRight = true;
 var aliensMoveDown = true;
 var aliensMoveLeft = true;
 var directionAfterShiftingDown = 1;
-
+var gIsAlienFreeze = false; // Change to true for debugging
 /* -------------------------------------------------------------------------- */
 
 function createAliens(board) {
