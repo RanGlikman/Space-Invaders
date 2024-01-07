@@ -14,7 +14,6 @@ var laserPos = { i: -1, j: -1 };
 var gBoard;
 var gGame = {
   isOn: true,
-  // score: 0,
   alienCount: 0,
 };
 
@@ -25,17 +24,16 @@ function init() {
   aliensMoveRight = true;
   gGame.isOn = true;
   gGame.alienCount = 0;
+  gGame.score = 0;
   directionAfterShiftingDown = 1;
   superModeleft = 3;
-  gBoard = createBoard();
   ALIENS_ON_BOARD = STARTING_ALIENS;
+  gBoard = createBoard();
   createHero(gBoard);
   renderBoard(gBoard);
-  // clearInterval(gIntervalAliens);
-  gIntervalAliens = setInterval(moveAliens, ALIEN_SPEED);
-  gGame.score = 0; //TODO: Check where to implement score resetting
-  updateScore(0);
   updateScoreDisplay();
+  updateSuperModeleft();
+  gIntervalAliens = setInterval(moveAliens, ALIEN_SPEED);
   document.addEventListener("keydown", onKeyDown);
 }
 

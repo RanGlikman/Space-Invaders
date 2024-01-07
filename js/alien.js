@@ -1,5 +1,4 @@
 "use strict";
-//TODO: When aliens hit hero, call gameOver function with !isVictory
 /* -------------------------------------------------------------------------- */
 const ALIEN_SPEED = 500;
 var gIntervalAliens;
