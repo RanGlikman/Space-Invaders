@@ -16,6 +16,11 @@ var gGame = {
   isOn: true,
   alienCount: 0,
 };
+var shootSound = new Audio("sounds/shoot.wav")
+var invaderKilledSound = new Audio("sounds/invaderkilled.wav")
+var heroKilledSound = new Audio("sounds/negative_beeps.mp3")
+var victorySound = new Audio("sounds/tada-military-3.mp3")
+
 
 /* -------------------------------------------------------------------------- */
 

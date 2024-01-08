@@ -6,8 +6,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Invaders 👾</title>
+    <title>Space Invaders</title>
     <link rel="stylesheet" href="css/app.css">
+    <link rel="icon" href="images/emoji-alien.ico" type="image/x-icon">
+
 </head>
 
 <!-- ----------------------------------------------------------------------- -->
@@ -17,6 +19,7 @@
     <h2 id="score">Score: <span class="numbers"></span></h2>
     <div id="gameBoard"></div>
     <h3 id="superMode">Super Laser shots left: <span class="numbers"></span></h3>
+    <p>Press the <span class="keys">⬅</span> and <span class="keys">⮕</span> keys to move </p>
     <p>Press <span class="keys">Spacebar</span> to fire a normal Laser 🔺</p>
     <p>Press <span class="keys">X</span> to fire a Super Laser 🔷</p>
     <p>Press <span class="keys">N</span> to destroy all aliens near laser 💥</p>
@@ -25,6 +28,9 @@
             <h4><span class="msg">VICTORY/GAME OVER message here</span></h4>
             <button onclick="init()">Play Again?</button>
         </div>
+    </div>
+    <br>
+        <p class="name">Ran Glikman, 2024</p>
         <script src="js/util.js"></script>
         <script src="js/game.js"></script>
         <script src="js/hero.js"></script>

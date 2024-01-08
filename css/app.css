@@ -42,24 +42,28 @@ span.numbers {
   color: yellow;
 }
 
+.name{
+  color: rgb(105, 101, 101)
+}
+
 p {
-  margin: 5px 0; /* Smaller top and bottom margins */
-  padding: 0; /* Adjust as needed */
+  margin: 5px 0; 
+  padding: 0; 
 }
 
 .game-over-container {
   display: flex;
-  align-items: center; /* Vertically centers the items in the container */
-  justify-content: center; /* Horizontally centers the items */
+  align-items: center; 
+  justify-content: center; 
 }
 
 .game-over-container h4,
 .game-over-container button {
-  padding: 5px; /* Optional, for spacing */
+  padding: 5px; 
 }
 
 .msg {
-  margin-right: 20px; /* Add space to the right of the message */
+  margin-right: 20px; 
 }
 
 button {

@@ -1,6 +1,6 @@
 "use strict";
 /* -------------------------------------------------------------------------- */
-var LASER_SPEED = 100;
+var LASER_SPEED = 80;
 var LASER_BLINK_SPEED = LASER_SPEED / 2;
 var gHero = { pos: { i: 12, j: 5 }, isShoot: false };
 let isLaserVisible = true;
@@ -92,6 +92,7 @@ function renderCell(position, content) {
 /* -------------------------------------------------------------------------- */
 
 function shoot(laserSymbol) {
+  shootSound.play()
   let laserPos = { i: gHero.pos.i - 1, j: gHero.pos.j };
   gHero.isShoot = true;
   let blinkInterval = setInterval(() => {
