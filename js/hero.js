@@ -35,6 +35,7 @@ function onKeyDown(ev) {
 
     case "X":
     case "x":
+    case "ס":
       if (!gHero.isShoot && superModeleft > 0) {
         const superLaser = "🔷";
         LASER_SPEED /= 2;
@@ -105,7 +106,7 @@ function shoot(laserSymbol) {
     /* -------------------------------------------------------------------------- */
     document.addEventListener("keydown", onKeyDown);
     function onKeyDown(ev) {
-      if ((ev.key === "N" || ev.key === "n") && gHero.isShoot) {
+      if ((ev.key === "N" || ev.key === "n"|| ev.key === "מ") && gHero.isShoot) {
         let i = laserPos.i;
         let j = laserPos.j;
         isSuperLaserActivated = true;
@@ -167,3 +168,4 @@ function updateSuperModeleftDisplay() {
 }
 
 /* -------------------------------------------------------------------------- */
+

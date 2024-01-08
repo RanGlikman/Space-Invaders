@@ -16,11 +16,13 @@ var gGame = {
   isOn: true,
   alienCount: 0,
 };
-var shootSound = new Audio("sounds/shoot.wav")
-var invaderKilledSound = new Audio("sounds/invaderkilled.wav")
-var heroKilledSound = new Audio("sounds/negative_beeps.mp3")
-var victorySound = new Audio("sounds/tada-military-3.mp3")
-
+var gCherryInterval;
+var shootSound = new Audio("sounds/shoot.wav");
+shootSound.volume = 0.2
+var invaderKilledSound = new Audio("sounds/invaderkilled.wav");
+invaderKilledSound.volume = 0.2
+var heroKilledSound = new Audio("sounds/negative_beeps.mp3");
+var victorySound = new Audio("sounds/tada-military-3.mp3");
 
 /* -------------------------------------------------------------------------- */
 
@@ -161,3 +163,5 @@ function updateSuperModeleft() {
   const elSuperModeleft = document.querySelector("h3 span");
   elSuperModeleft.innerText = superModeleft;
 }
+
+/* -------------------------------------------------------------------------- */

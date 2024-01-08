@@ -26,8 +26,7 @@ function handleAlienHit(pos) {
   if (gBoard[pos.i][pos.j].gameObject === ALIEN) {
     invaderKilledSound.play()
     console.log(pos);
-    // מוריד חייזר מהלוח
-    gBoard[pos.i][pos.j].gameObject = null;
+    gBoard[pos.i][pos.j].gameObject = null; // מוריד חייזר מהלוח
     updateCell(pos, null); // מחליף חייזר בתא ריק
     gGame.score += 10;
     ALIENS_ON_BOARD--;

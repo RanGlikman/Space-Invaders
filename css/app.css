@@ -42,30 +42,41 @@ span.numbers {
   color: yellow;
 }
 
-.name{
-  color: rgb(105, 101, 101)
+.name {
+  color: rgb(105, 101, 101);
 }
 
 p {
-  margin: 5px 0; 
-  padding: 0; 
+  margin: 5px 0;
+  padding: 0;
 }
 
 .game-over-container {
   display: flex;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
 }
 
 .game-over-container h4,
 .game-over-container button {
-  padding: 5px; 
+  padding: 5px;
 }
 
 .msg {
-  margin-right: 20px; 
+  margin-right: 20px;
 }
 
 button {
-  margin-left: 20px; /* Add space to the left of the button */
+  background-color: #079707;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: #ff00ff;
+  color: #000000;
 }
