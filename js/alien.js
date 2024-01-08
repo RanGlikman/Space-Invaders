@@ -24,7 +24,7 @@ function createAliens(board) {
 function handleAlienHit(pos) {
   if (pos.i < 0) return;
   if (gBoard[pos.i][pos.j].gameObject === ALIEN) {
-    invaderKilledSound.play()
+    invaderKilledSound.play();
     console.log(pos);
     gBoard[pos.i][pos.j].gameObject = null; // מוריד חייזר מהלוח
     updateCell(pos, null); // מחליף חייזר בתא ריק
@@ -34,7 +34,7 @@ function handleAlienHit(pos) {
     console.log("ALIENS_ON_BOARD: " + ALIENS_ON_BOARD);
     updateScoreDisplay();
     if (ALIENS_ON_BOARD === 0) {
-      victorySound.play()
+      victorySound.play();
       gGame.victory = true;
       gameOver(true);
     }
@@ -156,7 +156,7 @@ function moveAliens() {
 }
 
 function alienTouchingHero() {
-  heroKilledSound.play()
+  heroKilledSound.play();
   gIsAlienFreeze;
   aliensMoveLeft = false;
   aliensMoveDown = false;

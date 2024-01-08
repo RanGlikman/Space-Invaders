@@ -1,6 +1,6 @@
 "use strict";
 /* -------------------------------------------------------------------------- */
-var LASER_SPEED = 80;
+var LASER_SPEED = 60;
 var LASER_BLINK_SPEED = LASER_SPEED / 2;
 var gHero = { pos: { i: 12, j: 5 }, isShoot: false };
 let isLaserVisible = true;

@@ -141,6 +141,7 @@ function showGameOver() {
 
 function hideGameOver() {
   hideElement(".game-over");
+  hideElement(".start");
 }
 
 /* -------------------------------------------------------------------------- */
