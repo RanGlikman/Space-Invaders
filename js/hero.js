@@ -1,9 +1,10 @@
 "use strict";
 /* -------------------------------------------------------------------------- */
-var LASER_SPEED = 200;
+var LASER_SPEED = 100;
 var LASER_BLINK_SPEED = LASER_SPEED / 2;
 var gHero = { pos: { i: 12, j: 5 }, isShoot: false };
 let isLaserVisible = true;
+var isSuperLaserActivated = false;
 
 /* -------------------------------------------------------------------------- */
 
@@ -46,17 +47,10 @@ function onKeyDown(ev) {
         LASER_BLINK_SPEED *= 2;
       }
       break;
-    case "N":
-    case "n":
-      if (gHero.isShoot) {
-        blowUpNeighbors(gBoard, laserPos.i, laserPos.j);
-      }
-      break;
 
     default:
       return null;
   }
-
   moveHero(nextLocation);
 }
 
@@ -99,36 +93,54 @@ function renderCell(position, content) {
 
 function shoot(laserSymbol) {
   let laserPos = { i: gHero.pos.i - 1, j: gHero.pos.j };
+  gHero.isShoot = true;
   let blinkInterval = setInterval(() => {
     blinkLaser(laserPos, isLaserVisible, laserSymbol);
     isLaserVisible = !isLaserVisible;
   }, LASER_BLINK_SPEED);
 
   let moveInterval = setInterval(() => {
-    laserPos.i--; //מעלה לייזר למעלה
+    laserPos.i--; // Laser moving up
+    /* -------------------------------------------------------------------------- */
+    document.addEventListener("keydown", onKeyDown);
+    function onKeyDown(ev) {
+      if ((ev.key === "N" || ev.key === "n") && gHero.isShoot) {
+        let i = laserPos.i;
+        let j = laserPos.j;
+        isSuperLaserActivated = true;
+        handleAlienHit({ i: i - 1, j: j - 1 });
+        handleAlienHit({ i: i - 1, j: j });
+        handleAlienHit({ i: i - 1, j: j + 1 });
+        handleAlienHit({ i: i, j: j - 1 });
+        handleAlienHit({ i: i, j: j + 1 });
+        handleAlienHit({ i: i + 1, j: j - 1 });
+        handleAlienHit({ i: i + 1, j: j });
+        handleAlienHit({ i: i + 1, j: j + 1 });
+      }
+    }
+    /* -------------------------------------------------------------------------- */
 
-    // לייזר פוגע בחייזר
+    // Laser hits an alien or misses and reaches space
     if (
-      gBoard[laserPos.i] &&
-      (gBoard[laserPos.i][laserPos.j].gameObject === ALIEN ||
-        ALIEN === gBoard[laserPos.i][laserPos.j].gameObject)
+      (gBoard[laserPos.i] &&
+        gBoard[laserPos.i][laserPos.j].gameObject === ALIEN) ||
+      laserPos.i < 0
     ) {
       handleAlienHit(laserPos);
-      updateCell(laserPos, null); // מוריד לייזר (מחליף אותו בתא ריק)
+      updateCell(laserPos, null);
       clearInterval(blinkInterval);
       clearInterval(moveInterval);
       gHero.isShoot = false;
-
       return;
     }
 
-    // כאשר הלייזר עבר את הלוח
-    if (laserPos.i < 0) {
+    if (isSuperLaserActivated) {
       handleAlienHit(laserPos);
+      updateCell(laserPos, null);
       clearInterval(blinkInterval);
       clearInterval(moveInterval);
       gHero.isShoot = false;
-      updateCell(laserPos, null);
+      isSuperLaserActivated = false; // Reset the flag
       return;
     }
   }, LASER_SPEED);
@@ -152,3 +164,5 @@ function updateSuperModeleftDisplay() {
   const superModeLeftElement = document.getElementById("superMode");
   superModeLeftElement.textContent = `Super Mode left: ${superModeleft}`;
 }
+
+/* -------------------------------------------------------------------------- */

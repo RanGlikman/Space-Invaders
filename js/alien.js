@@ -22,21 +22,23 @@ function createAliens(board) {
 /* -------------------------------------------------------------------------- */
 
 function handleAlienHit(pos) {
-  // מוריד חייזר מהלוח
   if (pos.i < 0) return;
-  gBoard[pos.i][pos.j].gameObject = null;
-  updateCell(pos, null); // מחליף חייזר בתא ריק
-  gGame.score += 10;
-  ALIENS_ON_BOARD--;
-  gGame.alienCount++;
-  console.log("ALIENS_ON_BOARD: " + ALIENS_ON_BOARD);
-  updateScoreDisplay();
-  if (ALIENS_ON_BOARD === 0) {
-    gGame.victory = true;
-    gameOver(true);
+  if (gBoard[pos.i][pos.j].gameObject === ALIEN) {
+    console.log(pos);
+    // מוריד חייזר מהלוח
+    gBoard[pos.i][pos.j].gameObject = null;
+    updateCell(pos, null); // מחליף חייזר בתא ריק
+    gGame.score += 10;
+    ALIENS_ON_BOARD--;
+    gGame.alienCount++;
+    console.log("ALIENS_ON_BOARD: " + ALIENS_ON_BOARD);
+    updateScoreDisplay();
+    if (ALIENS_ON_BOARD === 0) {
+      gGame.victory = true;
+      gameOver(true);
+    }
   }
 }
-
 /* -------------------------------------------------------------------------- */
 
 // function shiftBoardRight(board, fromI, toI) { //TODO: Add fromI & toI

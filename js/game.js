@@ -6,8 +6,8 @@ const ALIEN_ROW_LENGTH = 8; //8
 const ALIEN_ROW_COUNT = 3; //3
 const STARTING_ALIENS = ALIEN_ROW_LENGTH * ALIEN_ROW_COUNT;
 var ALIENS_ON_BOARD = STARTING_ALIENS;
-var HERO = "👆";
-var ALIEN = "👾";
+const HERO = "👆";
+const ALIEN = "👾";
 const LASER = "🔺";
 var superModeleft = 3;
 var laserPos = { i: -1, j: -1 };
@@ -28,12 +28,16 @@ function init() {
   directionAfterShiftingDown = 1;
   superModeleft = 3;
   ALIENS_ON_BOARD = STARTING_ALIENS;
+  laserPos = null;
+  gHero.isShoot = false;
+  isSuperLaserActivated = false;
   gBoard = createBoard();
   createHero(gBoard);
   renderBoard(gBoard);
   updateScoreDisplay();
   updateSuperModeleft();
   gIntervalAliens = setInterval(moveAliens, ALIEN_SPEED);
+  document.removeEventListener("keydown", onKeyDown);
   document.addEventListener("keydown", onKeyDown);
 }
 
@@ -71,9 +75,9 @@ function renderBoard(board) {
         cellElement.innerHTML = HERO;
       }
       if (board[i][j].gameObject === LASER) {
-        // cellElement.classList.add("laser-cell"); //TODO: Check if necessary
         cellElement.innerHTML = LASER;
       }
+
       rowElement.appendChild(cellElement);
     }
     boardElement.appendChild(rowElement);
@@ -118,7 +122,7 @@ function gameOver(isVictory) {
   clearInterval(gIntervalAliens);
   showGameOver();
   const elMsgSpan = document.querySelector(".game-over .msg");
-  elMsgSpan.innerText = isVictory ? "VICTORY" : "GAME OVER";
+  elMsgSpan.innerText = isVictory ? "VICTORY!" : "GAME OVER!";
   gGame.isOn = false;
 }
 
